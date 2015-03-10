@@ -1,1 +1,3 @@
-console.log require('./app/scripts/lib/file.coffee')
+app = angular.module('myApp',[
+  'templates'
+])
