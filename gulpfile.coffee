@@ -70,7 +70,7 @@ $css_compiled_min = ->
 
 
 
-$bfy = through.obj (file,enc,cb) ->
+$bfy = -> new through.obj (file,enc,cb) ->
   browserify file
   .bundle (err,src) =>
  	  if err
@@ -104,7 +104,7 @@ gulp.task 'clean', (cb) ->
 
 
 gulp.task 'default', (cb) ->
-  gulpsync 'clean', ['scripts', 'styles'], 'inject', 'watch', cb
+  gulpsync 'clean', ['scripts', 'styles'], 'inject', 'serve', 'watch', cb
 
 gulp.task 'prod', (cb) ->
   gulpsync 'clean', ['scripts', 'styles'], 'uglify', 'inject.min', cb
@@ -162,7 +162,7 @@ gulp.task 'scripts:coffee', ->
   .on 'error', $error_handler
   .pipe do ng_annotate
   .on 'error', $error_handler
-  .pipe $bfy
+  .pipe do $bfy
   .on 'error', $error_handler
   .pipe do sourcemaps.write
   .pipe gulp.dest path.join($config.output.root, $config.output.assets.js)
@@ -186,7 +186,7 @@ gulp.task "serve", ->
 
 
 
-gulp.task "watch", ['serve'], ->
+gulp.task "watch", ->
   gulp.watch $config.watch.sass, ['styles:sass', browser_sync.reload]
   gulp.watch $config.watch.coffee, ['scripts:coffee', browser_sync.reload]
   gulp.watch $config.watch.templates, ['scripts:ng-jade', browser_sync.reload]

@@ -1,0 +1,10 @@
+.DS_Store
+**.swp
+**.log
+.sass-cache
+.sass-cache/*
+public/
+
+#keep
+!node_modules/
+!node_modules/**
